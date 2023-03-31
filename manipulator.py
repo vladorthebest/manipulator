@@ -61,7 +61,8 @@ class Shoulder:
         self.end_point.setY(newY)
         self.end_point.setZ(newZ)
 
-        
+    def getJoinAngl(self):
+        return self.joint_angles   
 
     def getEndPoint(self):
         return self.end_point
@@ -77,14 +78,12 @@ class Shoulder:
 class Manipulator:
 
     start_point = Point(0, 0, 0)
-    
     fig = plt.figure()
-
+    base_s1 = Shoulder(203, [-90, 90])
+    s2 = Shoulder(178, [-55, 125])
+    s3 = Shoulder(178, [0, 150])
     
     def __init__(self, point) -> None:
-        self.base_s1 = Shoulder(203, [0, 0])
-        self.s2 = Shoulder(178, [0, 0])
-        self.s3 = Shoulder(178, [0, 0])
         self.start_point.setPoint(point)
         self.ax = self.fig.add_subplot(111, projection='3d')
         self.ax.set_xlabel('X Axis')
@@ -103,13 +102,29 @@ class Manipulator:
         plt.show()
 
     def setAngl(self, ang1, ang2, ang3):
+        if(ang1 < self.base_s1.getJoinAngl()[0] or ang1 > self.base_s1.getJoinAngl()[1]):
+            print("Invalid angle 1")
+            print("Enable: [" + str(self.base_s1.getJoinAngl()[0]) + ":" + str(self.base_s1.getJoinAngl()[1]) + "]")
+            return 0
+        if(ang2 < self.s2.getJoinAngl()[0] or ang2 > self.s2.getJoinAngl()[1]):
+            print("Invalid angle 2")
+            print("Enable: [" + str(self.s2.getJoinAngl()[0]) + ":" + str(self.s2.getJoinAngl()[1]) + "]")
+            return 0
+        if(ang3 < self.s3.getJoinAngl()[0] or ang3 > self.s3.getJoinAngl()[1]):
+            print("Invalid angle 3")
+            print("Enable: [" + str(self.s3.getJoinAngl()[0]) + ":" + str(self.s3.getJoinAngl()[1]) + "]")
+            return 0
         self.s2.setAng(ang2, self.base_s1.getEndPoint())
         self.s3.setAng(ang2+ang3, self.s2.getEndPoint())
-    
 
-man = Manipulator(Point(0, 0, 0))
-man.setAngl(0, 45, 30)
-man.draw()
+def main():
+    man = Manipulator(Point(0, 0, 0))
+    if (man.setAngl(60, 100, 100) == 0):
+        return 0
+    man.draw()
+
+if __name__ == "__main__":
+    main()
 
 
 
