@@ -48,14 +48,16 @@ class Shoulder:
         self.end_point = Point(0, 0, z )
 
 
-    def setAng(self, ang, start_point):
+    def setAng(self, ang, start_point, ang_base):
         ang = 90 - ang #degrees
         ang = math.radians(ang) #radians
         self.ang = ang
+        ang_base = math.radians(ang_base) #radians
+        self.ang_base = ang_base
         self.start_point.setPoint(start_point)
 
-        newX = self.start_point.getX()
-        newY = self.start_point.getY() + self.l * math.cos(ang)
+        newX = (self.start_point.getX() + self.l * math.cos(ang))*math.sin(ang_base)
+        newY = (self.start_point.getY() + self.l * math.cos(ang))*math.cos(ang_base)
         newZ = self.start_point.getZ() + self.l * math.sin(ang)
         self.end_point.setX(newX)
         self.end_point.setY(newY)
@@ -114,12 +116,12 @@ class Manipulator:
             print("Invalid angle 3")
             print("Enable: [" + str(self.s3.getJoinAngl()[0]) + ":" + str(self.s3.getJoinAngl()[1]) + "]")
             return 0
-        self.s2.setAng(ang2, self.base_s1.getEndPoint())
-        self.s3.setAng(ang2+ang3, self.s2.getEndPoint())
+        self.s2.setAng(ang2, self.base_s1.getEndPoint(), ang1)
+        self.s3.setAng(ang2+ang3, self.s2.getEndPoint(), ang1)
 
 def main():
     man = Manipulator(Point(0, 0, 0))
-    if (man.setAngl(60, 100, 100) == 0):
+    if (man.setAngl(90, 90, 90) == 0):
         return 0
     man.draw()
 
