@@ -14,7 +14,7 @@ class Shoulder:
         self.end_point = Point(0, 0, z )
 
 
-    def setAng(self, ang, start_point, ang_base):
+    def setAng(self, ang, start_point, ang_base, revers):
         ang = 90 - ang #degrees
         ang = math.radians(ang) #radians
         self.ang = ang
@@ -22,12 +22,16 @@ class Shoulder:
         self.ang_base = ang_base
         self.start_point.setPoint(start_point)
 
-        newX = (self.start_point.getX() + self.l * math.cos(ang))*math.sin(ang_base)
+        if ang_base<0 and revers:
+            newX = (self.start_point.getX() - self.l * math.cos(ang))*math.sin(ang_base)*(-1)
+        else:
+            newX = (self.start_point.getX() + self.l * math.cos(ang))*math.sin(ang_base)
         newY = (self.start_point.getY() + self.l * math.cos(ang))*math.cos(ang_base)
         newZ = self.start_point.getZ() + self.l * math.sin(ang)
         self.end_point.setX(newX)
         self.end_point.setY(newY)
         self.end_point.setZ(newZ)
+    
 
     def getJoinAngl(self):
         return self.joint_angles   

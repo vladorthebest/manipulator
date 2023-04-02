@@ -24,3 +24,76 @@ A class that represents an auxiliary coordinate system for a `Point` object. It 
 
 ### Manipulator
 The main class that represents the robotic arm. It has three `Shoulder` objects representing the three joints of the arm. It also has a `Point` object representing the starting position of the arm, and a `matplotlib` figure for displaying the arm's position. The class has a method for drawing the arm in a 3D space.
+
+## Install
+```
+    pip install -r requirements.txt
+```
+
+
+## Examples of using
+
+### Code to render the manipulator:
+```
+    man = Manipulator(Point(0, 0, 0))
+        man.setAngl(45, 45, 45) # man.setAngl(angle1, angle2, angle3)
+        man.draw()
+```
+
+### Code to render the animation of the manipulator:
+```
+    man = Manipulator(Point(0, 0, 0))
+    for i in range(-55, 125, 5): # range(Start, End, Step)
+        man.setAngl(45, i, 45)
+        man.drawAnim()
+```
+
+### Code to render the endpoints of the manipulator:
+```
+    man = Manipulator(Point(0, 0, 0))
+    for i in range(-55, 125, 5):
+        man.setAngl(0, i, 0)
+        man.drawEndPoints()
+    man.showPlot()
+```
+
+### Code to render the endpoints of the manipulator:
+```
+    man = Manipulator(Point(0, 0, 0))
+    for i in range(-55, 125, 5):
+        man.setAngl(0, i, 0)
+        man.drawAnimEndPoints()
+```
+
+### Code for individual auxiliary coordinate systems:
+```
+    man = Manipulator(Point(0, 0, 0))
+    man.setAngl(45, 45, 45)
+    man.drawAuxilCord()
+    man.draw()
+```
+
+### Code for drawing the sphere of maximum points:
+```
+    man = Manipulator(Point(0, 0, 0))
+    for i in range(-90, 90, 10):
+        for j in range(-55, 125, 10):
+            man.setAngl(i, j, 0)    
+            man.drawEndPoints()
+```
+
+### Code for drawing the circle X0Y0 maximum points:
+```
+    man = Manipulator(Point(0, 0, 0))
+    for i in range(0, 150, 10):
+        man.setAngl(-90, 125, i)    
+        man.drawEndPoints()
+
+    for i in range(-90, 90, 10):
+        man.setAngl(i, 125, 0)    
+        man.drawEndPoints()
+
+    for i in range(0, 150, 10): 
+        man.setAngl(90, 125, i)    
+        man.drawEndPoints()
+```

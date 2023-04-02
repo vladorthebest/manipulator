@@ -88,8 +88,8 @@ class Manipulator:
             print("Invalid angle 3")
             print("Enable: [" + str(self.s3.getJoinAngl()[0]) + ":" + str(self.s3.getJoinAngl()[1]) + "]")
             return 0
-        self.s2.setAng(ang2, self.base_s1.getEndPoint(), ang1)
-        self.s3.setAng(ang2+ang3, self.s2.getEndPoint(), ang1)
+        self.s2.setAng(ang2, self.base_s1.getEndPoint(), ang1, False)
+        self.s3.setAng(ang2+ang3, self.s2.getEndPoint(), ang1, True)
 
     
     def drawAuxilCord(self):
